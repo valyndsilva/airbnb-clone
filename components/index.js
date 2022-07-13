@@ -10,3 +10,4 @@ export { default as Footer } from "./Footer";
 export { default as Block } from "./Block";
 export { default as Testimonials } from "./Testimonials";
 export { default as InfoCard } from "./InfoCard";
+export { default as MapComponent } from "./MapComponent";

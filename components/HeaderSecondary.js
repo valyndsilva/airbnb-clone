@@ -6,7 +6,7 @@ import {
   UsersIcon,
 } from "@heroicons/react/solid";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import AirbnbLg from "../public/airbnb-lg-logo.jpeg";
 import "react-date-range/dist/styles.css"; // main css file
 import "react-date-range/dist/theme/default.css"; // theme css file
@@ -14,7 +14,10 @@ import { DateRangePicker } from "react-date-range";
 import { useRouter } from "next/router";
 
 function HeaderSecondary({ placeholder }) {
+  const headerRef = useRef(null);
+
   const router = useRouter();
+  const [inputFocus, setInputFocus] = useState(false);
   const [searchInput, setSearchInput] = useState("");
   // console.log(searchInput);
   const [startDate, setStartDate] = useState(new Date());
@@ -25,6 +28,7 @@ function HeaderSecondary({ placeholder }) {
   // console.log(numberOfGuests);
 
   const resetInput = () => {
+    setInputFocus(true);
     setSearchInput("");
   };
 
@@ -41,6 +45,25 @@ function HeaderSecondary({ placeholder }) {
     });
   };
 
+  const openDateRangePicker = () => {
+    setInputFocus(true);
+    // document.body.style.overflow = "hidden";
+    // setTimeout(() => {
+    //   if (!isSmallScreen && secondaryLocationRef.current) {
+    //     secondaryLocationRef.current.focus();
+    //   }
+    // }, 10);
+  };
+  const closeDateRangePicker = () => {
+    setInputFocus(false);
+    // setLocation("");
+    // setNumberOfChildren(0);
+    // setNumberOfAdults(0);
+    // setCheckInDate(new Date());
+    // setCheckOutDate(new Date());
+    // document.body.style.overflow = "initial";
+  };
+
   const selectionRange = {
     startDate: startDate,
     endDate: endDate,
@@ -53,8 +76,22 @@ function HeaderSecondary({ placeholder }) {
     setEndDate(ranges.selection.endDate);
   };
 
+  useEffect(() => {
+    const handleClick = (event) => {
+      if (!headerRef.current.contains(event.target)) {
+        closeDateRangePicker();
+      }
+    };
+
+    document.addEventListener("click", handleClick);
+    return () => document.removeEventListener("click", handleClick);
+  }, []);
+
   return (
-    <header className="sticky top-0 z-50 bg-white shadow-md p-5 md:px-10">
+    <header
+      ref={headerRef}
+      className="sticky top-0 z-50 bg-white shadow-md p-5 md:px-10"
+    >
       <div className="grid grid-cols-3 max-w-6xl mx-auto">
         <div
           onClick={() => router.push("/")}
@@ -72,6 +109,7 @@ function HeaderSecondary({ placeholder }) {
         <div className="flex items-center md:border-2 rounded-full py-2 md:shadow-sm">
           <input
             value={searchInput}
+            onFocus={openDateRangePicker}
             onChange={(e) => {
               setSearchInput(e.target.value);
             }}
@@ -90,18 +128,17 @@ function HeaderSecondary({ placeholder }) {
             <UserCircleIcon className="h-6 cursor-pointer" />
           </div>
         </div>
-        {searchInput && (
+
+        {inputFocus && (
           <div className="flex flex-col col-span-3 mx-auto">
             <DateRangePicker
               ranges={[selectionRange]}
               minDate={new Date()}
-              rangeColors={["#FD5B61"]}
+              rangeColors={["#F5385D"]}
               onChange={handleSelect}
             />
             <div className="flex items-center border-b mb-4">
-              <h2 className="text-2xl flex-grow font-semibold">
-                Number of Guests
-              </h2>
+              <h2 className="text-2xl flex-grow font-semibold">Add Guests</h2>
               <UsersIcon className="h-5" />
               <input
                 value={numberOfGuests}
