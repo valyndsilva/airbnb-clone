@@ -6,4 +6,13 @@
   .pillButton {
     @apply px-4 py-2 border rounded-full hover:cursor-pointer hover:shadow-lg active:scale-95 active:bg-gray-100 transition transform duration-100 ease-out;
   }
+  .mapbox-popup-close .mapboxgl-popup-close-button {
+    @apply  hover:bg-red-500 p-2 bg-red-400 text-white rounded-md;
+  }
+  .mapbox-popup-close .mapboxgl-popup-tip {
+    @apply hidden;
+  }
+  .mapbox-popup-close .mapboxgl-popup-content {
+    @apply p-0;
+  }
 }

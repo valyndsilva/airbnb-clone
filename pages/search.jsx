@@ -37,19 +37,18 @@ function Search({ searchResults }) {
             <p className="pillButton">Rooms and Beds</p>
             <p className="pillButton">More Filters</p>
           </div>
-          <div className=" flex w-auto bg-white p-5 rounded-md shadow-sm">
-            <div className="flex items-center h-20 w-full px-2 rounded-md py-2 shadow-md ">
+          <div className=" flex w-auto bg-white rounded-full shadow-md mb-4">
+            <div className="flex items-center h-20 w-full px-2 rounded-md py-2  ">
               <input
-                className=" flex-grow outline-none ml-2 text-gray-500"
+                className=" flex-grow outline-none ml-4 text-gray-500"
                 type="text"
                 value={filterResults}
-                placeholder="Filter By Price"
+                placeholder="Search By Title, Description or Price"
                 onChange={(e) => setFilterResults(e.target.value)}
               />
               <SearchIcon className="h-8 mr-5 cursor-pointer" />
             </div>
           </div>
-          {/* </div> */}
           <div>
             {searchResults
               .filter((item) => {
