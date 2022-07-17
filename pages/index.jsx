@@ -1,9 +1,11 @@
 import { ChevronRightIcon } from "@heroicons/react/solid";
+import { clearStorage } from "mapbox-gl";
 import Head from "next/head";
 import Image from "next/image";
 import {
   Header,
-  Banner,
+  Jumbotron,
+  ExtraSmallCard,
   SmallCard,
   MediumCard,
   LargeCard,
@@ -12,10 +14,15 @@ import {
   LargeCardSplit,
   Block,
   Testimonials,
+  HeaderNav,
 } from "../components";
 
 import hostingImg from "../public/hosting.webp";
-const Home = ({ exploreData, cardsData }) => {
+const Home = ({ exploreData, cardsData, liveData, discoverData }) => {
+  // console.log({ exploreData });
+  // console.log({ liveData });
+  // console.log({ discoverData });
+  // console.log({ cardsData });
   return (
     <div className="">
       <Head>
@@ -23,30 +30,60 @@ const Home = ({ exploreData, cardsData }) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       {/* <Header /> */}
-      <HeaderSecondary />
-      <Banner />
-      <main className="flex flex-col px-20 py-10 max-w-7xl mx-auto">
-        <section className="pt-6">
-          <h2 className="text-4xl font-semibold pb-5  px-20">Explore Nearby</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            {exploreData?.map((item, index) => (
-              <SmallCard
-                key={index}
-                img={item.img}
-                distance={item.distance}
-                location={item.location}
-              />
-            ))}
-          </div>
+      <HeaderNav />
+      <Jumbotron />
+      <main className="flex flex-col px-20 pb-10 max-w-7xl mx-auto">
+        <section>
+          {exploreData.map((data) => (
+            <>
+              <h2 className="text-4xl font-semibold py-2">{data.title}</h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                {data.items.map((item, index) => (
+                  <ExtraSmallCard
+                    key={index}
+                    img={data.urlPrefix + item.img}
+                    distance={item.distance}
+                    location={item.location}
+                  />
+                ))}
+              </div>
+            </>
+          ))}
         </section>
         <section>
-          <h2 className="text-4xl font-semibold py-8 px-20">Live Anywhere</h2>
-          <div className="flex space-x-3 overflow-scroll scrollbar-hide p-3">
-            {cardsData?.map((item, index) => (
-              <MediumCard key={index} img={item.img} title={item.title} />
-            ))}
-          </div>
+          {liveData.map((data) => (
+            <>
+              <h2 className="text-4xl font-semibold py-8">{data.title}</h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+                {data.items.map((item, index) => (
+                  <SmallCard
+                    key={index}
+                    img={data.urlPrefix + item.img}
+                    title={item.title}
+                  />
+                ))}
+              </div>
+            </>
+          ))}
         </section>
+        <section>
+          {discoverData.map((data) => (
+            <>
+              <h2 className="text-4xl font-semibold py-8">{data.title}</h2>
+              <div className="flex space-x-3 overflow-scroll scrollbar-hide p-3 -ml-3">
+                {data.items.map((item, index) => (
+                  <MediumCard
+                    key={index}
+                    img={data.urlPrefix + item.img}
+                    title={item.title}
+                    description={item.text}
+                  />
+                ))}
+              </div>
+            </>
+          ))}
+        </section>
+
         <LargeCard
           img="https://links.papareact.com/4cj"
           title="The Greatest Outdoors"
@@ -88,7 +125,16 @@ export default Home;
 
 //Implementing Server Static Generation
 export async function getStaticProps() {
-  const exploreData = await fetch("https://jsonkeeper.com/b/4G1G").then(
+  //Explore nearby
+  const exploreData = await fetch("https://jsonkeeper.com/b/SKW4").then(
+    (data) => data.json()
+  );
+  //Live anywhere
+  const liveData = await fetch("https://jsonkeeper.com/b/92GA").then((data) =>
+    data.json()
+  );
+  //Discover things to do
+  const discoverData = await fetch("https://jsonkeeper.com/b/NLWV").then(
     (data) => data.json()
   );
   const cardsData = await fetch("https://jsonkeeper.com/b/VHHT").then((data) =>
@@ -97,7 +143,9 @@ export async function getStaticProps() {
   return {
     props: {
       exploreData: exploreData,
+      liveData: liveData,
       cardsData: cardsData,
+      discoverData: discoverData,
     },
   };
 }

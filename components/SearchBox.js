@@ -11,7 +11,7 @@ function Search() {
   const numberofPeople = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   // console.log(numberofPeople);
   return (
-    <section className="bg-white border shadow-md rounded-lg w-full lg:w-1/2">
+    <section className="w-full bg-white border shadow-md rounded-lg  lg:w-1/2">
       <div className="p-5">
         <h3 className="text-xl font-semibold">Find places to stay on Airbnb</h3>
         <p className="text-md text-gray-500">

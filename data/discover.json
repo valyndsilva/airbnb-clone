@@ -1,0 +1,39 @@
+[
+  {
+    "title": "Discover things to do",
+    "items": [
+      {
+        "title": "Featured collection",
+        "text": "Travel from home with Online Experiences.",
+        "img": "1.jpg"
+      },
+      {
+        "title": "Online Experiences",
+        "text": "Live, interactive activities led by Hosts.",
+        "img": "2.jpg"
+      },
+      {
+        "title": "Experiences",
+        "text": "Find unforgettable activities near you.",
+        "img": "3.jpg"
+      },
+      {
+        "title": "Wanderlust",
+        "text": "Live, interactive activities led by Hosts.",
+        "img": "4.webp"
+      },
+      {
+        "title": "Featured Trips",
+        "text": "Travel from home with Online Experiences.",
+        "img": "5.webp"
+      },
+      {
+        "title": "Solo Trips",
+        "text": "Live, interactive activities led by Hosts.",
+        "img": "6.webp"
+      }
+    ],
+    "urlPrefix": "/images/discover/"
+  }
+]
+// https://jsonkeeper.com/b/NLWV

@@ -8,24 +8,24 @@ function Search({ searchResults }) {
   console.log(searchResults);
   const router = useRouter();
   console.log(router.query);
-  const { location, startDate, endDate, numberOfGuests } = router.query; // ES6 Destructuring
-  const fomrmattedStartDate = format(new Date(startDate), "dd MMMM yyyy");
-  const fomrmattedEndDate = format(new Date(endDate), "dd MMMM yyyy");
+  const { location, checkInDate, checkOutDate, numOfGuests } = router.query; // ES6 Destructuring
+  const fomrmattedStartDate = format(new Date(checkInDate), "dd MMMM yyyy");
+  const fomrmattedEndDate = format(new Date(checkOutDate), "dd MMMM yyyy");
   const range = `${fomrmattedStartDate} - ${fomrmattedEndDate}`;
   const [filterResults, setFilterResults] = useState("");
   return (
     <div className="">
       <HeaderSecondary
-        placeholder={`${location} | ${range} | ${numberOfGuests} ${
-          numberOfGuests == 1 ? " guest" : " guests"
+        placeholder={`${location} | ${range} | ${numOfGuests} ${
+          numOfGuests == 1 ? " guest" : " guests"
         }`}
       />
       <main className=" py-14 flex bg-gray-50 relative">
         <section className="flex-grow  px-6 md:px-16">
           <div className="w-full flex items-center justify-between">
             <p className="text-xs mb-7">
-              300+ Stays - {range} for {numberOfGuests}
-              {numberOfGuests == 1 ? " guest" : " guests"}
+              300+ Stays - {range} for {numOfGuests}
+              {numOfGuests == 1 ? " guest" : " guests"}
             </p>
           </div>
           <h1 className="text-3xl font-semibold mt-2 mb-6 capitalize">

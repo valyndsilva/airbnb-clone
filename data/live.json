@@ -1,0 +1,25 @@
+[
+  {
+    "title": "Live anywhere",
+    "items": [
+      {
+        "title": "Outdoor getaways",
+        "img": "1.jpg"
+      },
+      {
+        "title": "Unique stays",
+        "img": "2.jpg"
+      },
+      {
+        "title": "Entire homes",
+        "img": "3.jpg"
+      },
+      {
+        "title": "Pets allowed",
+        "img": "4.jpg"
+      }
+    ],
+    "urlPrefix": "/images/live/"
+  }
+]
+// https://jsonkeeper.com/b/92GA

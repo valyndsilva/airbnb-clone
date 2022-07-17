@@ -1,16 +1,13 @@
 import Image from "next/image";
 import React from "react";
 
-function SmallCard({ img, location, distance }) {
+function SmallCard({ img, title }) {
   return (
-    <div className="flex items-center m-2 mt-5 space-x-4 rounded-xl cursor-pointer hover:bg-gray-100 hover:scale-105 transition transform duration-200 ease-out">
-      <div className="relative h-16 w-16">
-        <Image src={img} layout="fill" className="rounded-lg" />
+    <div className="cursor-pointer hover:scale-105 transition transform duration-300 ease-out">
+      <div className="relative h-96 w-96 sm:h-64 sm:w-64 md:w-60 md:h-60 lg:w-64 lg:h-64 rounded-xl hover:shadow-xl">
+        <Image src={img} alt={title} layout="fill" className="rounded-xl" />
       </div>
-      <div>
-        <h2>{location}</h2>
-        <h3>{distance}</h3>
-      </div>
+      <h3 className="text-2xl mt-3">{title}</h3>
     </div>
   );
 }

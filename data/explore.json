@@ -1,0 +1,49 @@
+[
+  {
+    "title": "Explore Nearby",
+    "items": [
+      {
+        "location": "London",
+        "distance": "45-minute drive",
+        "img": "1.jpg"
+      },
+      {
+        "location": "Manchester",
+        "distance": "4.5-hour drive",
+        "img": "2.jpg"
+      },
+      {
+        "location": "Liverpool",
+        "distance": "3.5-hour drive",
+        "img": "3.jpg"
+      },
+      {
+        "location": "York",
+        "distance": "4-hour drive",
+        "img": "4.jpg"
+      },
+      {
+        "location": "Cardiff",
+        "distance": "45-minute drive",
+        "img": "5.jpg"
+      },
+      {
+        "location": "Birkenhead",
+        "distance": "6-hour drive",
+        "img": "6.jpg"
+      },
+      {
+        "location": "Newquay",
+        "distance": "3.5-hour drive",
+        "img": "7.jpg"
+      },
+      {
+        "location": "Hove",
+        "distance": "7.5-hour drive",
+        "img": "8.jpg"
+      }
+    ],
+    "urlPrefix": "/images/explore/"
+  }
+]
+// https://jsonkeeper.com/b/SKW4
