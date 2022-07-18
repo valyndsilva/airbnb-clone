@@ -1,6 +1,12 @@
 import { useRouter } from "next/router";
 import React, { useState } from "react";
-import { Footer, HeaderSecondary, InfoCard, MapComponent } from "../components";
+import {
+  Footer,
+  HeaderNav,
+  HeaderSecondary,
+  InfoCard,
+  MapComponent,
+} from "../components";
 import { format } from "date-fns";
 import { SearchIcon } from "@heroicons/react/solid";
 
@@ -8,24 +14,25 @@ function Search({ searchResults }) {
   console.log(searchResults);
   const router = useRouter();
   console.log(router.query);
-  const { location, checkInDate, checkOutDate, numOfGuests } = router.query; // ES6 Destructuring
+  const { location, checkInDate, checkOutDate, guests } = router.query; // ES6 Destructuring
   const fomrmattedStartDate = format(new Date(checkInDate), "dd MMMM yyyy");
   const fomrmattedEndDate = format(new Date(checkOutDate), "dd MMMM yyyy");
   const range = `${fomrmattedStartDate} - ${fomrmattedEndDate}`;
   const [filterResults, setFilterResults] = useState("");
   return (
     <div className="">
-      <HeaderSecondary
-        placeholder={`${location} | ${range} | ${numOfGuests} ${
-          numOfGuests == 1 ? " guest" : " guests"
-        }`}
+      <HeaderNav
+        locationS={location}
+        checkInDateS={checkInDate}
+        checkOutDateS={checkOutDate}
+        guestsS={guests}
       />
-      <main className=" py-14 flex bg-gray-50 relative">
+      <main className=" py-14 flex bg-gray-50 relative top-20">
         <section className="flex-grow  px-6 md:px-16">
           <div className="w-full flex items-center justify-between">
             <p className="text-xs mb-7">
-              300+ Stays - {range} for {numOfGuests}
-              {numOfGuests == 1 ? " guest" : " guests"}
+              300+ Stays in {location} - {range} for {guests}
+              {guests == 1 ? " guest" : " guests"}
             </p>
           </div>
           <h1 className="text-3xl font-semibold mt-2 mb-6 capitalize">

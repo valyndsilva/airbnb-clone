@@ -2,7 +2,7 @@ import React from "react";
 
 function NumberInput({ name, value, setValue }) {
   return (
-    <div className="flex items-center rounded-md  my-5">
+    <div className="flex items-center rounded-md  my-5 ">
       <label htmlFor={name} className="text-sm mr-3">
         {name}
       </label>
@@ -15,14 +15,14 @@ function NumberInput({ name, value, setValue }) {
           -
         </button>
         <input
-          min={0}
+          min={1}
           max={20}
           value={value}
           id={name}
           onChange={(e) => setValue(e.target.value)}
           type="number"
-          placeholder="Add dates"
-          className="inputbutton p-1 w-16 text-sm outline-none items-center text-gray-500 bg-gray-50"
+          placeholder="Add guests"
+          className="datepicker__inputbutton datepicker__input "
         />
         <button
           onClick={() => !(value >= 20) && setValue((val) => val + 1)}

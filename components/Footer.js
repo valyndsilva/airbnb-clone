@@ -45,32 +45,34 @@ function Footer() {
       </footer>
       {/* Mobile Nav Menu */}
       <div className="sticky bottom-0 w-full md:hidden bg-white p-3 border-t border-gray-300">
-        <div class="grid grid-cols-5 items-center justify-between text-gray-500">
+        <div className="grid grid-cols-5 items-center justify-between text-gray-500">
           <div
             className="group items-center cursor-pointer md:pl-4 pr-4"
             onClick={() => router.push("/")}
           >
             <Logo color={"text-[#FF385C]"} />
           </div>
-          <div class="group flex flex-col items-center">
+          <div className="group flex flex-col items-center">
             <HomeIcon className="h-7 group-hover:text-red-500 cursor-pointer" />
-            <p class="text-xs group-hover:text-gray-800 font-semibold">Home</p>
+            <p className="text-xs group-hover:text-gray-800 font-semibold">
+              Home
+            </p>
           </div>
-          <div class="group flex flex-col items-center">
+          <div className="group flex flex-col items-center">
             <SearchIcon className="h-7 group-hover:text-red-500 cursor-pointer" />
-            <p class="text-xs group-hover:text-gray-800 font-semibold">
+            <p className="text-xs group-hover:text-gray-800 font-semibold">
               Explore
             </p>
           </div>
-          <div class="group flex flex-col items-center">
+          <div className="group flex flex-col items-center">
             <HeartIcon className="h-7 group-hover:text-red-500 cursor-pointer" />
-            <p class="text-xs group-hover:text-gray-800 font-semibold">
+            <p className="text-xs group-hover:text-gray-800 font-semibold">
               Wishlists
             </p>
           </div>
-          <div class="group flex flex-col items-center">
+          <div className="group flex flex-col items-center">
             <UsersIcon className="h-7 group-hover:text-red-500 cursor-pointer" />
-            <p class="text-xs group-hover:text-gray-800 font-semibold">
+            <p className="text-xs group-hover:text-gray-800 font-semibold">
               Log in
             </p>
           </div>

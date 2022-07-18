@@ -1,4 +1,4 @@
-export { default as Header } from "./Header1";
+export { default as Header } from "./Header";
 export { default as HeaderNav } from "./HeaderNav";
 export { default as Logo } from "./Logo";
 export { default as HeaderSecondary } from "./HeaderSecondary";

@@ -11,15 +11,17 @@ import SearchBar from "./SearchBar";
 import { DateRangePicker } from "react-date-range";
 import NumberInput from "./NumberInput";
 import { useRouter } from "next/router";
+
 function HeaderNav() {
   const router = useRouter();
   const [scrolled, setScrolled] = useState(false);
   const [inputFocus, setInputFocus] = useState(false);
   const [location, setLocation] = useState("");
-  const [checkInDate, setCheckInDate] = useState(null);
-  const [checkOutDate, setCheckOutDate] = useState(null);
+  const [checkInDate, setCheckInDate] = useState(new Date());
+  const [checkOutDate, setCheckOutDate] = useState(new Date());
   const [numberOfAdults, setNumberOfAdults] = useState(0);
   const [numberOfChildren, setNumberOfChildren] = useState(0);
+  const [numberOfGuests, setNumberOfGuests] = useState(0);
 
   useEffect(() => {
     const onScroll = () => {
@@ -44,16 +46,20 @@ function HeaderNav() {
     endDate: checkOutDate,
     key: "selection",
   };
+
+  const handleSelectDate = (ranges) => {
+    console.log(ranges.selection);
+    setCheckInDate(ranges.selection.startDate);
+    console.log(checkInDate);
+    setCheckOutDate(ranges.selection.endDate);
+    console.log(checkOutDate);
+  };
+
   // Opens the date range picker
   const openDatePicker = () => {
     setInputFocus(true);
     setLocation(" ");
     document.body.style.overflow = "hidden";
-    // setTimeout(() => {
-    //   if (!isSmallScreen && secondaryLocationRef.current) {
-    //     secondaryLocationRef.current.focus();
-    //   }
-    // }, 10);
   };
 
   const closeDatePicker = () => {
@@ -67,18 +73,28 @@ function HeaderNav() {
   };
 
   // Submits data from range picker to the search page.
-  const search = () => {
+  const search = (e) => {
+    // router.push("/search");
+    e.preventDefault();
+    if (!location) {
+      primaryLocationRef.current.focus();
+      return;
+    }
     setLocation("");
-    setNumberOfGuests(1);
+    setNumberOfAdults(0);
+    setNumberOfChildren(0);
+    setCheckInDate(new Date());
+    setCheckOutDate(new Date());
     router.push({
       pathname: "/search",
       query: {
         location: location,
-        checkInDate: checkInDate.toISOString(),
-        checkOutDate: checkOutDate.toISOString(),
+        checkInDate: checkInDate.toString().slice(0, 15),
+        checkOutDate: checkOutDate.toString().slice(0, 15),
         guests: numberOfChildren + numberOfAdults,
       },
     });
+    setTimeout(() => closeDatePicker(), 100);
   };
   return (
     <>
@@ -95,37 +111,59 @@ function HeaderNav() {
             className="hidden md:inline-flex col-start-1 col-span-2 cursor-pointer"
             onClick={() => router.push("/")}
           >
-            <Logo color={scrolled ? "text-[#FF385C]" : "text-white"} />
+            <Logo
+              color={
+                scrolled || router.pathname !== "/"
+                  ? "text-[#FF385C]"
+                  : "text-white"
+              }
+            />
           </div>
           <div className="col-start-1 col-end-9 md:col-start-3 md:col-end-8 lg:col-start-3 lg:col-end-7">
             <div
-              className={
-                scrolled
+              className={`${
+                scrolled || router.pathname !== "/"
                   ? "hidden"
-                  : " hidden justify-center items-center lg:flex space-x-5 text-gray-200 mb-2"
-              }
+                  : inputFocus
+                  ? " hidden justify-center items-center lg:flex space-x-5 mb-2 text-gray-500 "
+                  : "hidden justify-center items-center lg:flex space-x-5 text-gray-200 mb-2"
+              }`}
             >
               <h2 className="header__link">Places to stay</h2>
               <h2 className="header__link">Experiences</h2>
               <h2 className="header__link">Online Experiences</h2>
             </div>
+
             <SearchBar
               openDatePicker={openDatePicker}
               closeDatePicker={closeDatePicker}
+              location={location}
               search={search}
+              handleInputChange={handleInputChange}
+              checkInDate={checkInDate}
+              checkOutDate={checkOutDate}
+              guests={numberOfChildren + numberOfAdults}
             />
           </div>
           <div className="hidden md:inline-flex md:col-start-8 md:col-span-1 lg:col-start-7 lg:col-span-2 justify-end">
             <div className="flex justify-center items-center space-x-4">
               <p
                 className={`hidden lg:inline-flex 
-            ${scrolled ? "text-gray-500" : " header__link text-gray-200"}`}
+            ${
+              scrolled || router.pathname !== "/"
+                ? "text-gray-500"
+                : inputFocus
+                ? "text-gray-500"
+                : "header__link text-gray-200"
+            }`}
               >
                 Become a host
               </p>
               <GlobeAltIcon
                 className={`${
-                  scrolled ? "text-gray-500" : "text-white"
+                  scrolled || router.pathname !== "/"
+                    ? "text-gray-500"
+                    : "text-white"
                 } hidden lg:inline-flex h-7`}
               />
               <div
@@ -140,59 +178,41 @@ function HeaderNav() {
         </div>
       </header>
       {inputFocus && (
-        <div className="datepicker flex flex-col  max-w-2xl mx-auto sticky h-screen top-[10rem] z-50 bg-white p-5 md:px-10">
+        <div
+          className={`${
+            scrolled
+              ? "datepicker flex flex-col  max-w-2xl mx-auto sticky h-fit shadow-md overflow-y-scroll scrollbar-hide top-[6.5rem] z-50 bg-white p-5 md:px-10 "
+              : "datepicker flex flex-col  max-w-2xl mx-auto sticky h-screen overflow-y-scroll scrollbar-hide top-[10rem] z-50 bg-white p-5 md:px-10"
+          }`}
+        >
           <DateRangePicker
             ranges={[selectionRange]}
             minDate={new Date()}
             rangeColors={["#F5385D"]}
-            onChange={handleInputChange}
+            onChange={handleSelectDate}
           />
-          {/* <div className="flex items-center border-b my-4">
-            <h2 className="text-md flex-grow font-semibold">Add Guests</h2>
-            <UsersIcon className="h-5" />
-            <input
-              value={numberOfGuests}
-              onChange={(e) => {
-                setNumberOfGuests(e.target.value);
-              }}
-              min={1} //Set min value of input field to 1
-              type="number"
-              className="w-12 pl-2 text-lg outline-none text-red-400"
-            />
-          </div>
-          <div className="flex">
-            <button
-              onClick={closeDatePicker}
-              className="flex-grow text-gray-500"
-            >
-              Cancel
-            </button>
-            <button onClick={search} className="flex-grow text-red-500">
-              Search
-            </button>
-          </div> */}
           <div className="flex justify-between border-b mb-5">
             <NumberInput
               name="Adults"
-              value={numberOfAdults.value}
-              setValue={numberOfAdults.setValue}
+              value={numberOfAdults}
+              setValue={setNumberOfAdults}
             />
             <NumberInput
               name="Children"
-              value={numberOfChildren.value}
-              setValue={numberOfChildren.setValue}
+              value={numberOfChildren}
+              setValue={setNumberOfChildren}
             />
           </div>
           <div className="flex space-x-5">
             <button
               onClick={closeDatePicker}
-              className="pillButton flex-grow text-gray-500 bg-gray-50"
+              className="datepicker__subButton flex-grow text-gray-500 bg-gray-50 active:bg-gray-200"
             >
               Cancel
             </button>
             <button
               onClick={search}
-              className="pillButton flex-grow text-white bg-[#F77171]"
+              className="datepicker__subButton flex-grow text-white bg-[#F77171] active:bg-[#f1868d]"
             >
               Search
             </button>

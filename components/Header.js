@@ -40,6 +40,9 @@ function Header({ placeholder, collapsed }) {
   const handleSelectDate = (ranges) => {
     setCheckInDate(ranges.selection.checkInDate);
     setCheckOutDate(ranges.selection.checkOutDate);
+    console.log(ranges);
+    console.log(checkInDate);
+    console.log(checkOutDate);
   };
 
   // Fills header component when page is scrolled past half of the header height

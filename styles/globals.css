@@ -7,8 +7,12 @@
     @apply px-4 py-2 border rounded-full hover:cursor-pointer hover:shadow-lg active:scale-95 active:bg-gray-100 transition transform duration-100 ease-out;
   }
 
+  .datepicker__subButton {
+    @apply px-4 py-2 border rounded-full hover:cursor-pointer hover:shadow-lg active:scale-95  transition transform duration-100 ease-out;
+  }
+
   .header__link {
-    @apply text-lg hover:text-white opacity-80;
+    @apply text-lg  hover:opacity-80;
   }
 
   .datepicker__inputbutton {
@@ -16,7 +20,11 @@
   }
 
   .datepicker__button {
-    @apply leading-4 rounded-full bg-gray-200 text-gray-500 px-3;
+    @apply leading-4 rounded-full bg-gray-200 text-gray-500 px-6 py-4 hover:bg-gray-300;
+  }
+
+  .datepicker__input {
+    @apply p-2 md:w-24 justify-center text-sm outline-none items-center text-center text-gray-500 bg-gray-50;
   }
 
   .datepicker .rdrDateRangePickerWrapper {

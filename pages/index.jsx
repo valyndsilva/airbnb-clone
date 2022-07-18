@@ -18,24 +18,20 @@ import {
 } from "../components";
 
 import hostingImg from "../public/hosting.webp";
-const Home = ({ exploreData, cardsData, liveData, discoverData }) => {
-  // console.log({ exploreData });
-  // console.log({ liveData });
-  // console.log({ discoverData });
-  // console.log({ cardsData });
+const Home = ({ exploreData, liveData, discoverData }) => {
   return (
     <div className="">
       <Head>
         <title>AirBnb Clone</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      {/* <Header /> */}
+
       <HeaderNav />
       <Jumbotron />
       <main className="flex flex-col px-20 pb-10 max-w-7xl mx-auto">
         <section>
-          {exploreData.map((data) => (
-            <>
+          {exploreData.map((data, index) => (
+            <div key={index}>
               <h2 className="text-4xl font-semibold py-2">{data.title}</h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                 {data.items.map((item, index) => (
@@ -47,12 +43,12 @@ const Home = ({ exploreData, cardsData, liveData, discoverData }) => {
                   />
                 ))}
               </div>
-            </>
+            </div>
           ))}
         </section>
         <section>
-          {liveData.map((data) => (
-            <>
+          {liveData.map((data, index) => (
+            <div key={index}>
               <h2 className="text-4xl font-semibold py-8">{data.title}</h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
                 {data.items.map((item, index) => (
@@ -63,12 +59,12 @@ const Home = ({ exploreData, cardsData, liveData, discoverData }) => {
                   />
                 ))}
               </div>
-            </>
+            </div>
           ))}
         </section>
         <section>
-          {discoverData.map((data) => (
-            <>
+          {discoverData.map((data, index) => (
+            <div key={index}>
               <h2 className="text-4xl font-semibold py-8">{data.title}</h2>
               <div className="flex space-x-3 overflow-scroll scrollbar-hide p-3 -ml-3">
                 {data.items.map((item, index) => (
@@ -80,7 +76,7 @@ const Home = ({ exploreData, cardsData, liveData, discoverData }) => {
                   />
                 ))}
               </div>
-            </>
+            </div>
           ))}
         </section>
 
@@ -137,14 +133,11 @@ export async function getStaticProps() {
   const discoverData = await fetch("https://jsonkeeper.com/b/NLWV").then(
     (data) => data.json()
   );
-  const cardsData = await fetch("https://jsonkeeper.com/b/VHHT").then((data) =>
-    data.json()
-  );
+
   return {
     props: {
       exploreData: exploreData,
       liveData: liveData,
-      cardsData: cardsData,
       discoverData: discoverData,
     },
   };
