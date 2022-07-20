@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { getProviders, signIn } from "next-auth/react";
 import Image from "next/image";
-import airbnbImg from "/public/airbnb-lg-logo.jpeg";
+import airbnbImg from "../../public/airbnb-lg-logo.jpeg";
 
 function Login({ providers }) {
   // console.log(providers);
@@ -17,16 +17,18 @@ function Login({ providers }) {
             priority
           />
         </div>
-        {Object.values(providers).map((provider) => (
-          <div key={provider.name} className="flex">
-            <button
-              onClick={() => signIn(provider.id, { callbackUrl: "/" })}
-              className="mt-7 bg-red-400 w-60 text-sm font-semibold text-white uppercase text-center rounded-xl py-2 cursor-pointer hover:bg-red-500 transition duration-200"
-            >
-              Sign in with {provider.name}
-            </button>
-          </div>
-        ))}
+        <div className="grid grid-cols-1 md:grid-cols-3 ">
+          {Object.values(providers).map((provider) => (
+            <div key={provider.name} className="">
+              <button
+                onClick={() => signIn(provider.id, { callbackUrl: "/" })}
+                className=" mt-7 mx-2 bg-red-400 w-60 text-sm font-semibold text-white uppercase text-center rounded-lg py-2 cursor-pointer hover:bg-red-500 transition duration-200"
+              >
+                Sign in with {provider.name}
+              </button>
+            </div>
+          ))}
+        </div>
       </div>
     </>
   );

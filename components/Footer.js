@@ -1,5 +1,5 @@
 import { HeartIcon, HomeIcon, UsersIcon } from "@heroicons/react/outline";
-import { SearchIcon, UserIcon } from "@heroicons/react/solid";
+import { SearchIcon, UserCircleIcon, UserIcon } from "@heroicons/react/solid";
 import React from "react";
 import Logo from "./Logo";
 import { useSession, signIn, signOut } from "next-auth/react";
@@ -77,7 +77,7 @@ function Footer() {
           <div className="group flex flex-col items-center">
             {!session ? (
               <>
-                <UsersIcon
+                <UserCircleIcon
                   className="h-7 group-hover:text-red-500 cursor-pointer"
                   onClick={signIn}
                 />
@@ -90,8 +90,10 @@ function Footer() {
               </>
             ) : (
               <>
-                <UserIcon
-                  className="h-7 group-hover:text-red-500 cursor-pointer"
+                <img
+                  className="h-6 w-6 rounded-full cursor-pointer"
+                  src={session.user?.image}
+                  alt="avatar"
                   onClick={() => signOut({ callbackUrl: "/auth/login" })}
                 />
                 <span
