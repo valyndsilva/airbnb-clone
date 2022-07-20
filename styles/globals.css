@@ -72,6 +72,10 @@
     @apply bg-red-800;
   }
 
+  .datepicker .rdrMonths.rdrMonthsVertical {
+    @apply items-center;
+  }
+
   .map-pop-up .mapboxgl-popup-content .mapboxgl-popup-close-button {
     @apply hover:bg-red-500 p-2 bg-red-400 text-white rounded-md;
   }

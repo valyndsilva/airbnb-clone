@@ -3,11 +3,14 @@ import { GlobeAltIcon, MenuIcon, UserCircleIcon } from "@heroicons/react/solid";
 import React, { useEffect, useState } from "react";
 import Logo from "./Logo";
 import SearchBar from "./SearchBar";
-import { DateRangePicker } from "react-date-range";
+import { DateRange, DateRangePicker } from "react-date-range";
 import NumberInput from "./NumberInput";
 import { useRouter } from "next/router";
+import { useMediaQuery } from "@react-hook/media-query";
 
 function HeaderNav() {
+  const isSmallScreen = useMediaQuery("(max-width: 36rem)");
+
   const { data: session } = useSession();
   console.log(session);
 
@@ -90,6 +93,13 @@ function HeaderNav() {
     });
     setTimeout(() => closeDatePicker(), 100);
   };
+
+  const options = {
+    rangeColors: ["#e0565b"],
+    ranges: [selectionRange],
+    minDate: new Date(),
+    onChange: handleSelectDate,
+  };
   return (
     <>
       <header
@@ -107,7 +117,7 @@ function HeaderNav() {
           >
             <Logo
               color={
-                scrolled || router.pathname !== "/"
+                scrolled || router.pathname !== "/" || inputFocus
                   ? "text-[#FF385C]"
                   : "text-white"
               }
@@ -191,12 +201,17 @@ function HeaderNav() {
               : "datepicker flex flex-col  max-w-2xl mx-auto sticky h-screen overflow-y-scroll scrollbar-hide top-[10rem] z-50 bg-white p-5 md:px-10"
           }`}
         >
-          <DateRangePicker
+          {isSmallScreen ? (
+            <DateRange {...options} />
+          ) : (
+            <DateRangePicker className="" {...options} />
+          )}
+          {/* <DateRangePicker
             ranges={[selectionRange]}
             minDate={new Date()}
             rangeColors={["#F5385D"]}
             onChange={handleSelectDate}
-          />
+          /> */}
           <div className="flex justify-between border-b mb-5">
             <NumberInput
               name="Adults"
