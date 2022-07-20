@@ -51,9 +51,9 @@ function MapComponent({ searchResults, filterResults }) {
           aria-label="push-pin"
         />
 
-        {/* <div className="bg-white rounded-2xl hover:bg-black hover:text-white transition duration-150 ease-out cursor-pointer w-28 border font-semibold py-2 px-2 ">
+        <div className="bg-white rounded-2xl hover:bg-black hover:text-white transition duration-150 ease-out cursor-pointer w-28 border font-semibold py-2 px-2 ">
           {marker.price}
-        </div> */}
+        </div>
       </Marker>
     );
   };

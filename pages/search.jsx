@@ -1,24 +1,23 @@
 import { useRouter } from "next/router";
 import React, { useState } from "react";
-import {
-  Footer,
-  HeaderNav,
-  HeaderSecondary,
-  InfoCard,
-  MapComponent,
-} from "../components";
+import { Footer, HeaderNav, InfoCard, Map } from "../components";
 import { format } from "date-fns";
 import { SearchIcon } from "@heroicons/react/solid";
+import { getSession } from "next-auth/react";
 
-function Search({ searchResults }) {
-  console.log(searchResults);
+function Search({ session, resultsData }) {
+  // console.log(resultsData);
   const router = useRouter();
-  console.log(router.query);
+  // console.log(router.query);
   const { location, checkInDate, checkOutDate, guests } = router.query; // ES6 Destructuring
-  const fomrmattedStartDate = format(new Date(checkInDate), "dd MMMM yyyy");
-  const fomrmattedEndDate = format(new Date(checkOutDate), "dd MMMM yyyy");
-  const range = `${fomrmattedStartDate} - ${fomrmattedEndDate}`;
+
+  const formattedStartDate = format(new Date(checkInDate), "dd MMMM yyyy");
+  const formattedEndDate = format(new Date(checkOutDate), "dd MMMM yyyy");
+  const range = `${formattedStartDate} - ${formattedEndDate}`;
+
   const [filterResults, setFilterResults] = useState("");
+  const [viewLocation, setViewLocation] = useState({});
+
   return (
     <div className="">
       <HeaderNav
@@ -31,7 +30,9 @@ function Search({ searchResults }) {
         <section className="flex-grow  px-6 md:px-16">
           <div className="w-full flex items-center justify-between">
             <p className="text-xs mb-7">
-              300+ Stays in {location} - {range} for {guests}
+              300+ Stays in {location} -{" "}
+              <span className="bg-gray-200 p-1 rounded-md">{range}</span> for{" "}
+              {guests}
               {guests == 1 ? " guest" : " guests"}
             </p>
           </div>
@@ -57,7 +58,7 @@ function Search({ searchResults }) {
             </div>
           </div>
           <div>
-            {searchResults
+            {resultsData
               .filter((item) => {
                 if (filterResults === "") {
                   return item;
@@ -77,27 +78,41 @@ function Search({ searchResults }) {
               })
               .map(
                 (
-                  { img, location, title, description, star, price, total },
+                  {
+                    images,
+                    location,
+                    title,
+                    description,
+                    star,
+                    price,
+                    total,
+                    latitude,
+                    longitude,
+                  },
                   index
                 ) => (
                   <InfoCard
                     key={index}
-                    img={img}
+                    images={images}
                     location={location}
                     title={title}
                     description={description}
                     star={star}
                     price={price}
                     total={total}
+                    latitude={latitude}
+                    longitude={longitude}
+                    setViewLocation={setViewLocation}
                   />
                 )
               )}
           </div>
         </section>
         <section className="hidden xl:inline-flex xl:min-w-[600px] h-screen sticky top-20">
-          <MapComponent
-            searchResults={searchResults}
+          <Map
+            resultsData={resultsData}
             filterResults={filterResults}
+            viewLocation={viewLocation}
           />
         </section>
       </main>
@@ -108,13 +123,24 @@ function Search({ searchResults }) {
 
 export default Search;
 
-export async function getServerSideProps() {
-  const searchResults = await fetch("https://jsonkeeper.com/b/5NPS").then(
+//Implementing Server Side Rendering
+export async function getServerSideProps(context) {
+  const session = await getSession(context);
+  if (!session) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: "/auth/login",
+      },
+    };
+  }
+  const resultsData = await fetch("https://jsonkeeper.com/b/TMUL").then(
     (data) => data.json()
   );
   return {
     props: {
-      searchResults: searchResults,
+      session,
+      resultsData: resultsData,
     },
   };
 }

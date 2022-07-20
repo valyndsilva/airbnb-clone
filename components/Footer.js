@@ -1,9 +1,13 @@
 import { HeartIcon, HomeIcon, UsersIcon } from "@heroicons/react/outline";
-import { SearchIcon } from "@heroicons/react/solid";
+import { SearchIcon, UserIcon } from "@heroicons/react/solid";
 import React from "react";
 import Logo from "./Logo";
+import { useSession, signIn, signOut } from "next-auth/react";
 
 function Footer() {
+  const { data: session } = useSession();
+
+  console.log(session);
   return (
     <>
       <footer>
@@ -44,7 +48,7 @@ function Footer() {
         </div>
       </footer>
       {/* Mobile Nav Menu */}
-      <div className="sticky bottom-0 w-full md:hidden bg-white p-3 border-t border-gray-300">
+      <div className="sticky bottom-0 w-full lg:hidden bg-white p-3 border-t border-gray-300">
         <div className="grid grid-cols-5 items-center justify-between text-gray-500">
           <div
             className="group items-center cursor-pointer md:pl-4 pr-4"
@@ -71,10 +75,33 @@ function Footer() {
             </p>
           </div>
           <div className="group flex flex-col items-center">
-            <UsersIcon className="h-7 group-hover:text-red-500 cursor-pointer" />
-            <p className="text-xs group-hover:text-gray-800 font-semibold">
-              Log in
-            </p>
+            {!session ? (
+              <>
+                <UsersIcon
+                  className="h-7 group-hover:text-red-500 cursor-pointer"
+                  onClick={signIn}
+                />
+                <span
+                  className="text-xs group-hover:text-gray-800 font-semibold  cursor-pointer"
+                  onClick={signIn}
+                >
+                  Log in
+                </span>
+              </>
+            ) : (
+              <>
+                <UserIcon
+                  className="h-7 group-hover:text-red-500 cursor-pointer"
+                  onClick={() => signOut({ callbackUrl: "/auth/login" })}
+                />
+                <span
+                  className="text-xs group-hover:text-gray-800 font-semibold  cursor-pointer"
+                  onClick={() => signOut({ callbackUrl: "/auth/login" })}
+                >
+                  Log out
+                </span>
+              </>
+            )}
           </div>
         </div>
       </div>

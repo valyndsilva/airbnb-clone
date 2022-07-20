@@ -1,24 +1,20 @@
-import { ChevronRightIcon } from "@heroicons/react/solid";
-import { clearStorage } from "mapbox-gl";
 import Head from "next/head";
-import Image from "next/image";
+import { getSession } from "next-auth/react";
 import {
-  Header,
   Jumbotron,
   ExtraSmallCard,
   SmallCard,
   MediumCard,
   LargeCard,
   Footer,
-  HeaderSecondary,
   LargeCardSplit,
   Block,
   Testimonials,
   HeaderNav,
 } from "../components";
-
+import { ChevronRightIcon } from "@heroicons/react/solid";
 import hostingImg from "../public/hosting.webp";
-const Home = ({ exploreData, liveData, discoverData }) => {
+const Home = ({ session, exploreData, liveData, discoverData }) => {
   return (
     <div className="">
       <Head>
@@ -112,15 +108,26 @@ const Home = ({ exploreData, liveData, discoverData }) => {
           </div>
         </section>
       </main>
-      <Footer />
+      <Footer/>
     </div>
   );
 };
 
 export default Home;
 
-//Implementing Server Static Generation
-export async function getStaticProps() {
+//Pre-render user on the server side which gives accessToken before it hits the client side so we have the key.
+export async function getServerSideProps(context) {
+  const session = await getSession(context); // prefetches session info so it can use the info before hand. Ex: render the playlist image in MainView.js
+  if (!session) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: "/auth/login",
+      },
+    };
+  }
+  console.log(session);
+
   //Explore nearby
   const exploreData = await fetch("https://jsonkeeper.com/b/SKW4").then(
     (data) => data.json()
@@ -136,6 +143,7 @@ export async function getStaticProps() {
 
   return {
     props: {
+      session,
       exploreData: exploreData,
       liveData: liveData,
       discoverData: discoverData,

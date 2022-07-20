@@ -27,3 +27,15 @@ https://visgl.github.io/react-map-gl/docs/get-started/state-management
 Add geo-lib for Markers: https://github.com/manuelbieh/geolib
 npm install geolib
 https://visgl.github.io/react-map-gl/docs/api-reference/marker
+
+npm install react-simple-image-slider --save
+https://www.npmjs.com/package/react-simple-image-slider
+https://github.com/kimcoder/react-simple-image-slider/blob/master/example/App.tsx
+
+npm install --save next-auth
+
+.env.local:
+NEXTAUTH_SECRET=value you can define (go to https://generate-secret.now.sh/32)
+NEXTAUTH_URL=value same as NEXT_PUBLIC_BASE_URL (this should be changed to the url after deployment)
+
+https://next-auth.js.org/configuration/pages#sign-in-page

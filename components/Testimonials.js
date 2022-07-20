@@ -77,7 +77,7 @@ function Testimonials() {
               />
             </div>
             <div>
-              <h3 className="font-semibold text-gray-900 text-md">Prymslew</h3>
+              <h3 className="font-semibold text-gray-900 text-md">Luan</h3>
               <p className="font-light">United Kngdom</p>
             </div>
           </div>
@@ -111,7 +111,7 @@ function Testimonials() {
               />
             </div>
             <div>
-              <h3 className="font-semibold text-gray-900 text-md">Prymslew</h3>
+              <h3 className="font-semibold text-gray-900 text-md">Jakub</h3>
               <p className="font-light">United Kngdom</p>
             </div>
           </div>

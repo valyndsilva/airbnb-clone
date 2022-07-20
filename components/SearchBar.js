@@ -1,5 +1,4 @@
 import { SearchIcon } from "@heroicons/react/solid";
-import Router, { useRouter } from "next/router";
 import React from "react";
 
 function SearchBar({
@@ -11,9 +10,9 @@ function SearchBar({
   guests,
 }) {
   const checkIn = checkInDate.toString().slice(0, 15);
-  console.log(checkIn);
+  // console.log(checkIn);
   const checkOut = checkOutDate.toString().slice(0, 15);
-  console.log(checkIn);
+  // console.log(checkIn);
   return (
     <form className="bg-white grid grid-cols-9 shadow-lg border items-center rounded-full divide-x-2">
       <div className="col-start-1 col-span-2 overflow-hidden justify-center rounded-full cursor-pointer group">
@@ -40,7 +39,7 @@ function SearchBar({
             type="text"
             className="outline-none text-sm text-gray-600 group-hover:bg-gray-100  focus:text-gray-800 placeholder-gray-400 "
             placeholder="Add dates"
-            value={checkInDate > new Date() ? checkIn : "Add dates"}
+            defaultValue={checkInDate > new Date() ? checkIn : "Add dates"}
           />
         </div>
       </div>
@@ -53,7 +52,7 @@ function SearchBar({
             type="text"
             className="outline-none text-sm text-gray-600 group-hover:bg-gray-100  focus:text-gray-800 placeholder-gray-400 "
             placeholder="Add dates"
-            value={checkOutDate > new Date() ? checkOut : "Add dates"}
+            defaultValue={checkOutDate > new Date() ? checkOut : "Add dates"}
           />
         </div>
       </div>
@@ -66,7 +65,7 @@ function SearchBar({
             type="text"
             className="outline-none text-sm text-gray-600 group-hover:bg-gray-100  focus:text-gray-800 placeholder-gray-400 "
             placeholder="Add guests"
-            value={
+            defaultValue={
               guests > 1
                 ? `${guests} guests`
                 : guests === 1

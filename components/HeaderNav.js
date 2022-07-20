@@ -1,10 +1,5 @@
-import { HeartIcon, HomeIcon } from "@heroicons/react/outline";
-import {
-  GlobeAltIcon,
-  MenuIcon,
-  UserCircleIcon,
-  UsersIcon,
-} from "@heroicons/react/solid";
+import { signIn, signOut, useSession } from "next-auth/react";
+import { GlobeAltIcon, MenuIcon, UserCircleIcon } from "@heroicons/react/solid";
 import React, { useEffect, useState } from "react";
 import Logo from "./Logo";
 import SearchBar from "./SearchBar";
@@ -13,7 +8,11 @@ import NumberInput from "./NumberInput";
 import { useRouter } from "next/router";
 
 function HeaderNav() {
+  const { data: session } = useSession();
+  console.log(session);
+
   const router = useRouter();
+
   const [scrolled, setScrolled] = useState(false);
   const [inputFocus, setInputFocus] = useState(false);
   const [location, setLocation] = useState("");
@@ -21,7 +20,6 @@ function HeaderNav() {
   const [checkOutDate, setCheckOutDate] = useState(new Date());
   const [numberOfAdults, setNumberOfAdults] = useState(0);
   const [numberOfChildren, setNumberOfChildren] = useState(0);
-  const [numberOfGuests, setNumberOfGuests] = useState(0);
 
   useEffect(() => {
     const onScroll = () => {
@@ -48,11 +46,11 @@ function HeaderNav() {
   };
 
   const handleSelectDate = (ranges) => {
-    console.log(ranges.selection);
+    // console.log(ranges.selection);
     setCheckInDate(ranges.selection.startDate);
-    console.log(checkInDate);
+    // console.log(checkInDate);
     setCheckOutDate(ranges.selection.endDate);
-    console.log(checkOutDate);
+    // console.log(checkOutDate);
   };
 
   // Opens the date range picker
@@ -73,18 +71,14 @@ function HeaderNav() {
   };
 
   // Submits data from range picker to the search page.
-  const search = (e) => {
+  const search = () => {
     // router.push("/search");
-    e.preventDefault();
-    if (!location) {
-      primaryLocationRef.current.focus();
-      return;
-    }
     setLocation("");
     setNumberOfAdults(0);
     setNumberOfChildren(0);
     setCheckInDate(new Date());
     setCheckOutDate(new Date());
+
     router.push({
       pathname: "/search",
       query: {
@@ -108,7 +102,7 @@ function HeaderNav() {
       >
         <div className="grid grid-cols-8 gap-4 h-12 items-center">
           <div
-            className="hidden md:inline-flex col-start-1 col-span-2 cursor-pointer"
+            className="hidden lg:inline-flex col-start-1 col-span-2 cursor-pointer"
             onClick={() => router.push("/")}
           >
             <Logo
@@ -119,7 +113,7 @@ function HeaderNav() {
               }
             />
           </div>
-          <div className="col-start-1 col-end-9 md:col-start-3 md:col-end-8 lg:col-start-3 lg:col-end-7">
+          <div className="col-start-1 col-end-9  lg:col-start-3 lg:col-end-7">
             <div
               className={`${
                 scrolled || router.pathname !== "/"
@@ -145,10 +139,10 @@ function HeaderNav() {
               guests={numberOfChildren + numberOfAdults}
             />
           </div>
-          <div className="hidden md:inline-flex md:col-start-8 md:col-span-1 lg:col-start-7 lg:col-span-2 justify-end">
+          <div className="hidden lg:inline-flex lg:col-start-7 lg:col-span-2 justify-end">
             <div className="flex justify-center items-center space-x-4">
               <p
-                className={`hidden lg:inline-flex 
+                className={`hidden lg:inline-flex cursor-pointer
             ${
               scrolled || router.pathname !== "/"
                 ? "text-gray-500"
@@ -164,14 +158,26 @@ function HeaderNav() {
                   scrolled || router.pathname !== "/"
                     ? "text-gray-500"
                     : "text-white"
-                } hidden lg:inline-flex h-7`}
+                } cursor-pointer hidden lg:inline-flex h-7`}
               />
               <div
-                className={`flex items-center space-x-2 border p-2 rounded-full bg-gray-100 
+                className={`flex items-center space-x-2 border p-2 rounded-full bg-gray-100 cursor-pointer
             ${scrolled ? "border-gray-300" : "border-transparent"}`}
               >
-                <MenuIcon className="h-5 text-gray-500" />
-                <UserCircleIcon className="h-6 text-gray-500" />
+                <MenuIcon className="h-5 text-gray-500 cursor-pointer" />
+                {session ? (
+                  <img
+                    className="h-6 w-6 rounded-full cursor-pointer"
+                    src={session.user?.image}
+                    alt="avatar"
+                    onClick={() => signOut({ callbackUrl: "/auth/login" })}
+                  />
+                ) : (
+                  <UserCircleIcon
+                    className="h-6 text-gray-500 cursor-pointer"
+                    onClick={signIn}
+                  />
+                )}
               </div>
             </div>
           </div>

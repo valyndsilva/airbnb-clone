@@ -1,6 +1,4 @@
-import Image from "next/image";
 import React from "react";
-import { SearchBox } from ".";
 
 function Banner() {
   return (
@@ -18,4 +16,3 @@ function Banner() {
 }
 
 export default Banner;
-// absolute h-80 right-0 z-10
