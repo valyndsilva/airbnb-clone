@@ -11,7 +11,6 @@ export { default as Footer } from "./Footer";
 export { default as Block } from "./Block";
 export { default as Testimonials } from "./Testimonials";
 export { default as InfoCard } from "./InfoCard";
-export { default as MapComponent } from "./MapComponent";
 export { default as Map } from "./Map";
 export { default as DatePicker } from "./DatePicker";
 export { default as NumberInput } from "./NumberInput";

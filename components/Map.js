@@ -22,7 +22,7 @@ function Map({ resultsData, viewLocation, filterResults }) {
     height: "100%",
     latitude: center.latitude,
     longitude: center.longitude,
-    zoom: 13,
+    zoom: 10,
   });
 
   // State for displaying location popup on map
