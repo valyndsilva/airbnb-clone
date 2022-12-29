@@ -20,8 +20,44 @@
 
 Checkout the [demo here](https://airbnb-clone-valyndsilva.vercel.app/)
 
-### Title
+### Sign In with Google
 
-![](/public/gifs/.gif)
+![](/public/gifs/1.signin-google.gif)
 
-[Expand](/public/demos/.mp4)
+[Expand](/public/demos/1.signin-google.mp4)
+
+### Sign In with Twitter
+
+![](/public/gifs/2.signin-twitter.gif)
+
+[Expand](/public/demos/2.signin-twitter.mp4)
+
+### Sign In with Github
+
+![](/public/gifs/3.signin-github.gif)
+
+[Expand](/public/demos/3.signin-github.mp4)
+
+### Homepage
+
+![](/public/gifs/4.homepage-preview.gif)
+
+[Expand](/public/demos/4.homepage-preview.mp4)
+
+### Choose a location, date and no. of adults and children:
+
+![](/public/gifs/5.Choose-location-date-people.gif)
+
+[Expand](/public/demos/5.Choose-location-date-people.mp4)
+
+### Explore search results
+
+![](/public/gifs/6.explore-results.gif)
+
+[Expand](/public/demos/6.explore-results.mp4)
+
+### Search results based on keywords, price, location
+
+![](/public/gifs/7.search-filter.gif)
+
+[Expand](/public/demos/7.search-filter.mp4)
