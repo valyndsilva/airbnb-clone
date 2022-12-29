@@ -12,7 +12,7 @@ function HeaderNav() {
   const isSmallScreen = useMediaQuery("(max-width: 36rem)");
 
   const { data: session } = useSession();
-  console.log(session);
+  // console.log(session);
 
   const router = useRouter();
 

@@ -14,7 +14,21 @@ import {
 } from "../components";
 import { ChevronRightIcon } from "@heroicons/react/solid";
 import hostingImg from "../public/hosting.webp";
+import { useEffect } from "react";
+import fetchExplore from "../utils/fetchExplore";
+import fetchLive from "../utils/fetchLive";
+import fetchDiscover from "../utils/fetchDiscover";
 const Home = ({ session, exploreData, liveData, discoverData }) => {
+  // const apiUrl = "https://jsonkeeper.com/b/SKW4";
+  // async function pullJson() {
+  //   const response = await fetch(apiUrl);
+  //   const responseData = await response.json();
+  //   console.log(responseData);
+  // }
+  // useEffect(() => {
+  //   pullJson();
+  // }, []);
+
   return (
     <div className="">
       <Head>
@@ -108,7 +122,7 @@ const Home = ({ session, exploreData, liveData, discoverData }) => {
           </div>
         </section>
       </main>
-      <Footer/>
+      <Footer />
     </div>
   );
 };
@@ -128,18 +142,66 @@ export async function getServerSideProps(context) {
   }
   console.log(session);
 
-  //Explore nearby
-  const exploreData = await fetch("https://jsonkeeper.com/b/SKW4").then(
-    (data) => data.json()
-  );
-  //Live anywhere
-  const liveData = await fetch("https://jsonkeeper.com/b/92GA").then((data) =>
-    data.json()
-  );
-  //Discover things to do
-  const discoverData = await fetch("https://jsonkeeper.com/b/NLWV").then(
-    (data) => data.json()
-  );
+  //Different methods to fetch:
+  // Option 1:
+  //Explore nearby:
+  // const exploreData = await fetch("https://jsonkeeper.com/b/SKW4").then(
+  //   (data) => data.json()
+  // );
+
+  //Live anywhere:
+  // const liveData = await fetch("https://jsonkeeper.com/b/92GA").then((data) =>
+  //   data.json()
+  // );
+
+  //Discover things to do:
+  // const discoverData = await fetch("https://jsonkeeper.com/b/NLWV").then(
+  //   (data) => data.json()
+  // );
+
+  // Option 2:
+  //Explore nearby:
+  // const exploreResponse = await fetch("https://www.jsonkeeper.com/b/SKW4");
+  // const exploreData = await exploreResponse.json();
+
+  //Live anywhere:
+  // const liveResponse = await fetch("https://www.jsonkeeper.com/b/92GA");
+  // const liveData = await liveResponse.json();
+
+  //Discover things to do:
+  // const discoverResponse = await fetch("https://www.jsonkeeper.com/b/NLWV");
+  // const discoverData = await discoverResponse.json();
+
+  // Option 3:
+  //Explore nearby:
+  // const exploreResponse = await fetch(
+  //   `${process.env.NEXT_PUBLIC_BASE_URL}/api/explore`
+  // );
+  // const exploreData = await exploreResponse.json();
+
+  //Live anywhere:
+  // const liveResponse = await fetch(
+  //   `${process.env.NEXT_PUBLIC_BASE_URL}/api/live`
+  // );
+  // const liveData = await liveResponse.json();
+
+  //Discover things to do:
+  // const discoverResponse = await fetch(
+  //   `${process.env.NEXT_PUBLIC_BASE_URL}/api/discover`
+  // );
+  // const discoverData = await discoverResponse.json();
+
+  // Option 4:
+  // const exploreData = await fetchExplore();
+  // const liveData = await fetchLive();
+  // const discoverData = await fetchDiscover();
+
+  // Option 5:
+  const [exploreData, liveData, discoverData] = await Promise.all([
+    fetchExplore(),
+    fetchLive(),
+    fetchDiscover(),
+  ]);
 
   return {
     props: {

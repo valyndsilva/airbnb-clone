@@ -7,7 +7,7 @@ import { useSession, signIn, signOut } from "next-auth/react";
 function Footer() {
   const { data: session } = useSession();
 
-  console.log(session);
+  // console.log(session);
   return (
     <>
       <footer>
