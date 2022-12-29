@@ -4,6 +4,7 @@ import { Footer, HeaderNav, InfoCard, Map } from "../components";
 import { format } from "date-fns";
 import { SearchIcon } from "@heroicons/react/solid";
 import { getSession } from "next-auth/react";
+import fetchSearch from "../utils/fetchSearch";
 
 function Search({ session, resultsData }) {
   // console.log(resultsData);
@@ -134,9 +135,22 @@ export async function getServerSideProps(context) {
       },
     };
   }
-  const resultsData = await fetch("https://jsonkeeper.com/b/TMUL").then(
-    (data) => data.json()
-  );
+
+  //Search results:
+  //Option 1:
+  // const resultsData = await fetch("https://www.jsonkeeper.com/b/TMUL").then(
+  //   (data) => data.json()
+  // );
+
+  //Option 2:
+  // const searchResponse = await fetch(
+  //   `${process.env.NEXT_PUBLIC_BASE_URL}/api/search`
+  // );
+  // const resultsData = await searchResponse.json();
+
+  //Option 3:
+  const resultsData = await fetchSearch();
+
   return {
     props: {
       session,
